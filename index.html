@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Valentine for Mackenzie 💘</title>
+  <style>
+    :root { --pink:#ff4d6d; --bg:#fff0f6; --card:#ffffff; }
+    body{
+      margin:0; height:100vh; display:grid; place-items:center;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #ffe3ec, var(--bg));
+      overflow:hidden;
+    }
+    .card{
+      width:min(560px, 92vw);
+      background:var(--card);
+      border-radius:22px;
+      box-shadow:0 14px 40px rgba(0,0,0,.14);
+      padding:26px 22px;
+      text-align:center;
+      position:relative;
+    }
+    h1{ margin:0 0 8px; font-size:1.6rem; }
+    p{ margin:10px 0 0; font-size:1.05rem; }
+    .btns{ display:flex; gap:12px; justify-content:center; margin-top:16px; flex-wrap:wrap; }
+    button{
+      border:0; padding:12px 16px; border-radius:14px; cursor:pointer;
+      font-weight:800; letter-spacing:.2px; font-size:1rem;
+      box-shadow:0 8px 18px rgba(0,0,0,.08);
+    }
+    #yes{ background:var(--pink); color:white; }
+    #no{ background:#e9ecef; color:#222; }
+    .tiny{ opacity:.75; font-size:.9rem; margin-top:14px; }
+    .gifWrap{
+      display:none;
+      margin-top:16px;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 10px 24px rgba(0,0,0,.12);
+    }
+    .gifWrap img{ width:100%; height:auto; display:block; }
+    .badge{
+      display:inline-block; padding:6px 10px; border-radius:999px;
+      background:#ffe3ec; color:#a4133c; font-weight:800; font-size:.9rem;
+      margin-bottom:10px;
+    }
+    /* confetti hearts */
+    .confetti {
+      position: fixed;
+      top: -10px;
+      user-select: none;
+      pointer-events: none;
+      will-change: transform, opacity;
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <main class="card" aria-live="polite">
+    <div class="badge">Valentine Request</div>
+    <h1 id="title">Mackenzie… will you be my Valentine? 💘</h1>
+    <p id="msg">Click <b>Yes</b> to accept this extremely serious proposal.</p>
+
+    <div class="btns" id="btns">
+      <button id="yes">YES ✅</button>
+      <button id="no">no</button>
+    </div>
+
+    <div class="gifWrap" id="gifWrap">
+      <img
+        id="gif"
+        src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2NjOXVna3M5bTZzOWtza20xN2loZThyMWpjdW05cGhkd3FyZHBpdiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/0WBaSFVNxbzQuyj8E4/giphy.gif"
+        alt="Celebration GIF"
+      />
+    </div>
+
+    <div class="tiny" id="status">Build status: <b>in love</b> ✅</div>
+  </main>
+
+  <script>
+    const msg = document.getElementById("msg");
+    const yes = document.getElementById("yes");
+    const no = document.getElementById("no");
+    const gifWrap = document.getElementById("gifWrap");
+    const title = document.getElementById("title");
+    const status = document.getElementById("status");
+
+    // Make the "no" button dodge the cursor (optional, but funny)
+    no.addEventListener("mouseenter", () => {
+      no.style.position = "relative";
+      const x = Math.floor(Math.random() * 240) - 120;
+      const y = Math.floor(Math.random() * 140) - 70;
+      no.style.transform = `translate(${x}px, ${y}px)`;
+      msg.textContent = "⚠️ Action blocked: sadness is not permitted.";
+      status.innerHTML = "Security: <b>anti-no</b> enabled 🔒";
+    });
+
+    yes.addEventListener("click", () => {
+      title.textContent = "I love you Mackenzie ❤️";
+      msg.textContent = "✅ Valentine accepted. Initiating celebration protocol…";
+      gifWrap.style.display = "block";
+      no.style.display = "none";
+      yes.textContent = "LOCKED IN ✅";
+      status.innerHTML = "Relationship status: <b>best teammates</b> 💞";
+      popConfetti();
+      // Smooth scroll to the GIF on smaller screens
+      gifWrap.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+
+    function popConfetti() {
+      const emojis = ["❤️","💖","💘","✨","🌹"];
+      for (let i = 0; i < 90; i++) {
+        const el = document.createElement("div");
+        el.className = "confetti";
+        el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        el.style.left = (Math.random() * 100) + "vw";
+        el.style.fontSize = (12 + Math.random() * 22) + "px";
+        document.body.appendChild(el);
+
+        const fall = 110 + Math.random() * 80;
+        const spin = Math.random() * 360;
+
+        requestAnimationFrame(() => {
+          el.style.transition = "transform 2.3s ease, opacity 2.3s ease";
+          el.style.transform = `translateY(${fall}vh) rotate(${spin}deg)`;
+          el.style.opacity = "0";
+        });
+
+        setTimeout(() => el.remove(), 2400);
+      }
+    }
+  </script>
+</body>
+</html>
